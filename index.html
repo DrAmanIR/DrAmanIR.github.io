@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Radiology Resourses</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+/* Layout: PACS-style shell. Page list on the left, content as cards on the right. Content is copied unchanged from the Google Site. */
+:root{
+  --bg:#eef1f4;--surface:#fff;--ink:#16202b;--muted:#5b6876;--line:#d5dbe2;
+  --accent:#0b5cad;--accent-soft:#e3eefa;--amber:#a8620a;
+  --display:"Archivo",system-ui,sans-serif;--body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1218;--surface:#151c24;--ink:#e3e9ef;--muted:#93a1b0;--line:#26313d;--accent:#6fb2ff;--accent-soft:#16283c;--amber:#f0b04f;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0d1218;--surface:#151c24;--ink:#e3e9ef;--muted:#93a1b0;--line:#26313d;--accent:#6fb2ff;--accent-soft:#16283c;--amber:#f0b04f;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.6 var(--body);-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-underline-offset:3px;text-decoration-thickness:1px}
+a:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+.shell{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{position:sticky;top:0;height:100vh;overflow-y:auto;background:var(--surface);border-right:1px solid var(--line);padding:22px 14px;display:flex;flex-direction:column;gap:20px}
+.brand{display:flex;gap:10px;align-items:center;padding:0 8px;text-decoration:none;color:var(--ink);font:800 18px/1.15 var(--display)}
+nav{display:flex;flex-direction:column;gap:2px}
+nav a{padding:9px 12px;border-radius:6px;color:var(--ink);text-decoration:none;font:500 14px var(--mono);letter-spacing:.03em}
+nav a:hover{background:var(--bg)}
+nav a[aria-current="page"]{background:var(--accent-soft);color:var(--accent)}
+main{min-width:0;padding:28px clamp(16px,4vw,48px) 80px;max-width:1000px}
+.search{position:relative;display:block;margin-bottom:24px}
+.search input{width:100%;font:inherit;padding:11px 14px 11px 40px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink)}
+.search svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--muted)}
+h1{font:800 clamp(30px,4.5vw,44px)/1.1 var(--display);letter-spacing:-.01em;margin:0 0 22px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;margin-bottom:18px;overflow:hidden;scroll-margin-top:16px}
+.card>h2{font:600 17px var(--display);letter-spacing:.02em;margin:0;padding:14px 20px;border-bottom:1px solid var(--line);border-left:4px solid var(--accent)}
+.card-body{padding:12px 20px 16px}
+.card-body:empty{display:none}
+h3{font:600 15px var(--display);color:var(--amber);margin:18px 0 6px;letter-spacing:.02em}
+h3:first-child{margin-top:4px}
+p{margin:8px 0;max-width:72ch}
+ul{margin:4px 0;padding-left:20px}
+li{margin:5px 0}
+li::marker{color:var(--muted)}
+ul ul{margin:2px 0 4px}
+.toc{display:flex;gap:6px;flex-wrap:wrap;margin:-8px 0 22px}
+.toc a{font:500 12px var(--mono);padding:5px 10px;border-radius:6px;background:var(--surface);border:1px solid var(--line);text-decoration:none;color:var(--ink)}
+.toc a:hover{border-color:var(--accent);color:var(--accent)}
+.hide{display:none!important}
+mark{background:#fbf0dd;color:inherit;border-radius:2px}
+.mobile-nav{display:none}
+@media (max-width:820px){
+  .shell{grid-template-columns:1fr}
+  aside{display:none}
+  .mobile-nav{display:flex;position:sticky;top:0;z-index:5;background:var(--surface);border-bottom:1px solid var(--line);overflow-x:auto;gap:4px;padding:10px 16px;scrollbar-width:none}
+  .mobile-nav a{flex:none;font:500 13px var(--mono);padding:7px 12px;border-radius:999px;text-decoration:none;color:var(--ink);background:var(--bg)}
+  .mobile-nav a[aria-current="page"]{background:var(--accent);color:var(--surface)}
+}
+</style>
+</head>
+<body>
+<div class="mobile-nav" id="mnav"></div>
+<div class="shell">
+  <aside>
+    <a class="brand" href="#radiology">
+      <svg width="30" height="30" viewBox="0 0 34 34" aria-hidden="true"><rect x="1" y="1" width="32" height="32" rx="7" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17" cy="17" r="8" fill="none" stroke="currentColor" stroke-width="2"/><path d="M17 4v6M17 24v6M4 17h6M24 17h6" stroke="currentColor" stroke-width="2"/></svg>
+      Radiology Resourses
+    </a>
+    <nav id="nav"></nav>
+  </aside>
+  <main>
+    <label class="search" for="q">
+      <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M11 11l4 4" stroke="currentColor" stroke-width="1.6"/></svg>
+      <input id="q" type="search" placeholder="Search this site" autocomplete="off">
+    </label>
+    <div id="view"></div>
+  </main>
+</div>
+
+<script>
+/* Content copied word for word from https://sites.google.com/view/radiologyresourses
+   Markup: "## " card heading, "### " sub-heading, "- " list item (indent 2 spaces per level), other lines = paragraph, [text](url) = link */
+const PAGES = [
+{id:"radiology",name:"RADIOLOGY",md:`
+## RECOMMENDATION
+- Radiology Without Tears - [Radiology Books You Actually Need](https://rwtradiology.com/blog-details?id=13)
+- Radiogyan - [Recommended Radiology Books (2025)](https://radiogyan.com/radiology-resources/recommended-radiology-books/)
+- Cafe Roentgen - [What to read during radiology residency? The Cafe Roentgen consensus recommendations](https://caferoentgen.com/2018/05/28/what-to-read-during-radiology-residency/)
+- Anuj Aggarwal - [Approach to Radiology Residency: The Essential Books You Can't Miss](https://youtu.be/Ao1aOl5_7vY?si=OeYqdVRmDqNUo7u3)
+- Video Sources
+  - [Mamdouh Mahfouz (YouTube)](https://m.youtube.com/@Mamdouh.Mahfouz-DRE)
+  - Conceptual Radiology - Zainab Vora Ma'am (Paid)
+## RESOURSES (ME)
+### Physics
+- [Radiology Tutorials (YouTube)](https://m.youtube.com/@radiologytutorials)
+- Conceptual Radiology - Physics (Nikita Ma'am)
+- MRI
+  - MRI Made Easy - Govind
+  - MRI Made Easy - Hans Schild (For better understanding)
+- Radiology without Tears (Volume I) - MUST for MD Practical
+- Sarah Abdullah - Physics Book (FRCR)
+### Diagnostic Radiology
+- Core Radiology - Multiple times A to Z (Best for Basic Understanding)
+- Osborn Essential (700 Page Book) - Every Section Important. MUST - Demyelinating Disease, Toxic, metabolic, Congenital Disease.
+- CXR - Survival Guide
+- Emergency X-ray - Survival Guide
+- MSK Radiology - Helms
+- Sutton - As much as possible (At least All Images with description for Spotters)
+- Crack the core - Prometheus (First Aid type book - best book for MCQ Exam after knowing basic of Radiology)
+- [Radiopaedia Quiz](https://radiopaedia.org/quizzes/all)
+- Conceptual Radiology - Zainab Vora Ma'am (Paid)
+- [Mamdouh Mahfouz (YouTube)](https://m.youtube.com/@Mamdouh.Mahfouz-DRE)
+### Interventional Radiology
+- Conceptual Radiology - Akhil Sir
+- General IR - Kandarpa (Recommended book)
+- Neuro Intervention - Harrigan (Recommended book)
+- Textbook of Interventional Radiology - SH Chandrashekhara (AIIMS Faculty)
+### Spotters
+Practice as much as possible
+- Aunt Minnie Atlas
+- Conceptual Radiology - Spotters Book
+- [Radiogyan Spotters](https://radiogyan.com/radiology-spotters/) (Paid)
+- [The Radiologist Eye](https://www.theradiologisteye.com/spotters.php)
+- [Radiology Made Easy](https://radiologymadeeasynotes.com/) (Paid)
+- Radiology without Tears - OSCE Book
+- Radiology Case Series - Oxford
+- RadCases Series - Thieme
+- GI Imaging Review - Mayo Clinic (Very good book for Barium Spotters)
+- Telegram
+  - Exam going Radiology Pgs - Sanjay P Yadav
+  - Radvision SNK
+## MD EXAMINATION
+- Revision - Previously Read Resources
+- PYQs (5-10 Years)
+  - ChatGPT
+  - Radiopaedia
+  - Relevant Exam Oriented Book
+## NEET SS / INI SS (IR)
+(Previously Read Resources - As much as possible)
+### Mandatory Resources
+- Crack the core - Prometheus (Multiple times)
+- Core Radiology
+- Physics - Details Understanding Needed
+- Biostatistics including Screening, Epidemiology - Very Very Important
+- Tumor Staging - At least Common Tumors
+- Classification - At least (Tirads, Birads, Pirads, Lirads, Bosniac Renal Cyst Classification)
+- IR Disease Staging or classification like
+  - Peripheral Vascular - Rutherford, TASC II
+  - Brain AVM - Spetzler Martin
+  - DAVF - Borden, Cognard
+  - TACE - HCC BCLC
+- Neuro, Body & Peripheral IR Hardware - guidewire, sheaths, catheter, balloon, stent name, measurement
+- Embolisation agents - Details
+- IR Drugs & Contrast Media - eg. Anti coagulation drugs
+- Pre op check up coagulation profile, Post Op Complications
+- Every IR Procedures - Indications, Contraindications, Post op complications
+- Conceptual Radiology - Interventional Radiology videos
+- Speed Medical App (Grand Test & Qbank) - Not good but no other option available right now
+## About Radiology Resources:
+Welcome to Radiology Resources, a dedicated platform created to support learning, mastery, and excellence in the field of radiology. This site is thoughtfully curated for radiology residents, exam aspirants, and practicing radiologists who seek high-yield, practical radiology study materials in one accessible place.
+Radiology Resources brings together essential educational content across core imaging disciplines from anatomy and physics to ultrasound, X-rays, CT, MRI, and subspecialties, linking to trusted tools, books, video sources, quizzes, and structured study guides that help build both foundational knowledge and advanced diagnostic skills.
+### Our Vision
+1. We aim to demystify radiology and make learning structured, efficient, and exam-oriented.
+2. Radiology is a vast and constantly evolving field. With the right resources and guided preparation strategies, mastering it becomes not just achievable but rewarding.
+### Who This Is For:
+1. Radiology residents building competence across modalities
+2. Radiology residents targeting MD/DNB,  NEET SS, INI SS Examination.
+3. Practicing radiologists seeking quick reference and curated resources.
+`},
+{id:"anatomy",name:"ANATOMY",md:`
+## APP
+- [IMAIOS e-ANATOMY](https://www.imaios.com/en/e-anatomy) (Paid)
+## VIDEO
+- YouTube
+- [Radiology Tutorials (YouTube)](https://www.youtube.com/playlist?list=PLWfaNqiSdtzUbNVyoREkkbyJFbEG8MIOF)
+## BOOKS
+- Weir & Abrahams' Imaging Atlas of Human Anatomy
+- Anatomy for Diagnostic Imaging - Stephanie Ryan
+- Applied Radiological Anatomy - Paul Butler
+- Imaging Anatomy Series (Elsevier)
+- Pocket Atlas of Sectional Anatomy - Torsten B. Moeller
+`},
+{id:"physics",name:"PHYSICS",md:`
+## VIDEO
+- [Radiology Tutorials (YouTube)](https://m.youtube.com/@radiologytutorials)
+- Conceptual Radiology - Physics (Nikita Ma'am)
+## RADIOPHYSICS
+- Radiologic Science for Technologists: Physics, Biology, and Protection - Stewart C. Bushong
+- The Essential Physics of Medical Imaging - Jerrold T. Bushberg
+- Christensen's Physics of Diagnostic Radiology
+- Farr's Physics for Medical Imaging
+- FRCR Physics Notes - Sarah Abdullah
+- Radiological Physics (War Machine) - Prometheus
+- Radiology without Tears - Volume I
+- Known Unknowns of Everyday Radiology Practice - Bhavin Jankhari
+- Articles
+  - US Artefacts - [RSNA Article](https://doi.org/10.1148/rg.294085199)
+  - X-Rays Artefacts - [AJR Article](https://doi.org/10.2214/AJR.10.5563), [RSNA Article](https://doi.org/10.1148/rg.2018170038)
+  - CT Artefacts - [RSNA Article](https://doi.org/10.1148/rg.246045065)
+- Contrast Media
+  - [ACR Manual on Contrast Media](https://www.acr.org/Clinical-Resources/Clinical-Tools-and-Reference/Contrast-Manual)
+  - [ESUR Guidelines on Contrast Media](https://www.esur.org/esur-guidelines-2025/)
+## MRI PHYSICS
+- MRI Made Easy (For Beginner) - Govind B Chavhan
+- MRI Made Easy - Prof. Hans H. Schild
+- MRI in Practice - Catherine Westbrook
+- [ACR Manual on MR Safety](https://www.acr.org/Clinical-Resources/Clinical-Tools-and-Reference/radiology-safety/mr-safety)
+- MR Artefacts - [RSNA Article](https://doi.org/10.1148/rg.210021)
+`},
+{id:"usg",name:"USG",md:`
+## VIDEO
+- YouTube
+  - [123Radiology](https://www.youtube.com/@123radiology)
+  - [Indian Radiologist](https://www.youtube.com/@IndianRadiologist)
+  - [Dr. Sam’s Imaging Library](https://www.youtube.com/@DrSamsImagingLibrary)
+  - [Radiology Video - Radiology Made Easy](https://www.youtube.com/@RadiologyVideo)
+- 123 Sonography - MSK & Doppler Ultrasound
+## GENERAL US
+- Anatomy: Imaging Anatomy (Ultrasound) - Woodward
+- Differential Diagnosis: Expert DDX - Ahuja
+- Diagnostic Ultrasound Series (Elsevier)
+- Diagnostic Ultrasound - Rumack
+- Practical Ultrasound: An Illustrated Guide - Jane Alty
+## ABDOMEN & PELVIS
+- Diagnostic Ultrasound (Abdomen & Pelvis) - Kamaya
+- Hepatobiliary System - [GB Polyps](https://doi.org/10.1148/radiol.213079)
+- Female Pelvis - [AF Count](https://doi.org/10.1002/uog.18945), [Adnexal Cysts](https://doi.org/10.1148/radiol.2019191354), [ORADS](https://doi.org/10.1148/radiol.230685)
+- Inguinoscrotal Region - [Inguinal Hernia](https://doi.org/10.14366/usg.21192), [Testicular Torsions](https://doi.org/10.1148/rg.2020190111), [Scrotal Masses](https://doi.org/10.1148/rg.220080)
+## PEDIATRICS US
+- Pediatrics Sonography - Marilyn J. Siegel
+- Articles - [Brain US](https://doi.org/10.1148/rg.2021210089), [Spine US](https://doi.org/10.1148/rg.220136), [Liver & Spleen Size](https://www.indianpediatrics.net/june2010/487.pdf)
+## FETAL RADIOLOGY
+- Callen's Ultrasonography in Obstetrics and Gynecology
+- Obstetric Imaging (Fetal Diagnosis & Care) - Joshua A. Copel
+- Diagnostic Imaging (Obstetrics) - Woodward
+- Differential Diagnosis: Expert DDX - Woodward
+- [ISUOG Guidelines](https://www.isuog.org/clinical-resources/isuog-guidelines/practice-guidelines-english.html)
+- [ICRI Guidelines](https://icri.iria.org.in/about-icri/radiology-imaging-guidelines)
+- Fetal Brain
+  - Imaging of Fetal Brain and Spine (An Atlas & Guide) - BS Rama Murthy
+  - Ultrasonography of the Prenatal Brain - Ilan E. Timor-Tritsch
+- Fetal Orofacial
+  - First and Mid-Trimester Ultrasound Diagnosis of Orofacial Clefts - Lakshmy Ravi Selvaraj
+- Fetal Echocardiography
+  - Fetal Cardiac Anomalies (A Short Guide) - Society of Fetal Medicine
+  - A Practical Guide to Fetal Echocardiography (NORMAL & ABNORMAL HEARTS) - Alfred Abuhamad
+  - Fetal Echocardiography (A Practical Guide) - Lindsey D. Allan
+  - Guidelines - ISUOG, ICRI, AIUM
+- Fetal Doppler Ultrasound
+  - Doppler Ultrasound in Obstetrics and Gynecology - Dev Maulik
+- Fetal MRI
+  - MRI of Fetal and Maternal Diseases in Pregnancy - Gabriele Masselli
+## MSK US
+- Fundamentals of Musculoskeletal Ultrasound - Jon A. Jacobson
+- Ultrasound of Musculoskeletal System - S. Bianchi
+- Practical Musculoskeletal Ultrasound - Eugene Mcnally
+- Diagnostic Ultrasound (Musculoskeletal) - Griffith
+- Guidelines - [ESSR](https://www.essr.org/subcommittees/ultrasound/)
+- Soft Tissues
+  - Diagnostic Ultrasound in Dermatology - Huixiong Xu
+  - Atlas of Dermatologic Ultrasound - Ximena Wortsman
+  - Articles - [Soft Tissue Masses](https://doi.org/10.1148/radiol.211101)
+- Nerves
+  - Ultrasonography Diagnosis of Peripheral Nerves - Dingzhang Chen
+## HEAD & NECK US
+- Diagnostic Ultrasound (Head & Neck) - Ahuja
+- Thyroid - [TIRADS](https://www.acr.org/Clinical-Resources/Clinical-Tools-and-Reference/Reporting-and-Data-Systems/TI-RADS)
+- Salivary Glands - [RSNA Article](https://doi.org/10.1148/rg.263055024)
+- Eye US
+  - [RSNA Article](https://doi.org/10.1148/rg.325115105)
+  - Clinical Atlas of Ophthalmic Ultrasound - Abdulrahman H. Algaeed
+  - Atlas of Ophthalmic Ultrasound & Ultrasound Biomicroscopy - Sankara Nethralaya
+## BREAST US
+- [BIRADS - 6th Edition](https://www.acr.org/Clinical-Resources/Clinical-Tools-and-Reference/Reporting-and-Data-Systems/BI-RADS)
+- [BIRADS Chart -  5th Edition](https://msrads.web.unc.edu/wp-content/uploads/sites/15695/2018/04/BIRADS-Reference-Card_web_F.pdf)
+## DOPPLER US
+- Introduction to Vascular Ultrasonography - Pellerito & Polak
+- Clinical Doppler Ultrasound - Pozniak & Allan
+- Diagnostic Ultrasound (Vascular) - Lockhart
+- Penile Doppler
+  - Color Doppler US of the Penis - M. Bertolotto
+  - Article - [Rad Illustration](https://www.radiologyillustration.com/articles/penile-artery-doppler)
+- Articles - [Vascular Waveforms](https://doi.org/10.1177/1358863X20937665), [Carotid Doppler](https://doi.org/10.1148/rg.256045013), [Temporal Artery Doppler](https://www.utsouthwestern.edu/departments/radiology/protocols/assets/US%20Temporal%20Arteries.pdf), [Varicose Vein](https://doi.org/10.1148/rg.220057)
+## ELASTROGRAPHY
+- Liver Elastrography - [RSNA Article](https://doi.org/10.1148/radiol.2020192437)
+## CEUS
+## POCUS
+## ECHOCARDIOGRAPHY
+`},
+{id:"x-rays",name:"X-RAYS",md:`
+## POSITIONING
+- Clark's Positioning in Radiography
+## NORMAL VARIANTS
+- An atlas of normal roentgen variants that may simulate disease - Theodore E. Keats
+## CHEST X-RAYS
+- The Chest X-ray (A Survival Guide) - Gerald de Lacey
+- Felson's Principles of Chest Roentgenology (A Programmed Text) - Lawrence R. Goodman
+- Chest Roentgenology - Benjamin Felson
+- Chest X-kays for Medical Students (CXRs made easy) - Christopher Clarke
+- The Unofficial Guide to Radiology: 100 Practice Chest X-Rays, with Full Colour Annotations and Full X-Ray Reports
+## ABDOMINAL X-RAYS
+- Textbook of Gastrointestinal Radiology - Gore & Levine
+- Margulis & Burhenne's Alimentary Tract Radiology
+- Gastrointestinal Radiology (A Pattern Approach) - Ronald L. Eisenberg
+- Abdominal X-rays for Medical Students - Christopher G.D. Clarke
+- Procedures
+  - Radiological Procedures (A Guideline) - Bhushan N. Lakhkar
+  - Chapman & Nakielny's Guide to Radiological Procedures
+- Practical Fluoroscopy of the GI and GU Tracts - Marc S. Levine
+- Mayo Clinic Gastrointestinal Imaging Review - C. Daniel Johnson
+- Articles - [Barium Swallow](https://doi.org/10.1148/rg.2019190055), [Upper GI Fluoroscopy](https://doi.org/10.1148/rg.210069), [Small Bowel Follow-Through](https://doi.org/10.1148/rg.230135), [Barium Enema](https://doi.org/10.1148/rg.2018170111), [Cologram](https://pmc.ncbi.nlm.nih.gov/articles/PMC2890919/), [HSG](https://doi.org/10.1148/rg.262055109), [IVU](https://doi.org/10.1148/radiographics.21.4.g01jl26799), [Urethral Injury](https://doi.org/10.1148/rg.286085501)
+## MSK X-RAYS
+- Yochum and Rowe's Essentials of Skeletal Radiology
+- Fundamentals of Skeletal Radiology - Clyde A. Helms
+- Accident & Emergency Radiology (A Survival Guide) - Nigel Raby
+- Musculoskeletal X-rays for Medical Students and Trainees - Andrew K Brown
+- Arthritis in Black & White - Anne G. Brower
+- The Unofficial Guide to Radiology: 100 Practice Orthopaedic X-Rays with Full-Color Annotations and Full X-Ray Reports
+- Articles - [Cervical X-rays](https://doi.org/10.1148/rg.2019180148), [Ankle & Foot Injury](https://doi.org/10.1148/rg.240104), [Bone Tumors](https://doi.org/10.1148/rg.230048)
+`},
+{id:"ct-mri",name:"CT & MRI",md:`
+## PROTOCOLS
+- CT and MRI Protocol (A Practical Approach) - Sumeet Bhargav
+## VARIANTS
+- Variants and Pitfalls in Body Imaging: Thoracic, Abdominal and Women's Imaging - Ali Shirkhoda
+## CT  & MRI
+- CT & MRI of The Whole Body - John R. Haaga
+- Computed Body Tomography with MRI Correlation - Edward Y. Lee
+- Search Pattern (A Systematic Approach to Diagnostic Imaging) - Long H. Tu
+- Chapman & Nakielny's Aids to Radiological Differential Diagnosis
+- CT
+  - Fundamentals of Body CT - W Richard Webb
+  - CT Teaching Manual (A Systematic Approach to CT Reading) - Matthias Hofer
+- MRI
+  - Fundamentals of Body MRI - Christopher G. Roth
+  - Body MRI - Evan S Siegelman
+`},
+{id:"subspecialties",name:"SUBSPECIALTIES",md:`
+## GENERAL RADIOLOGY
+## NEURORADIOLOGY
+HEAD NECK, BRAIN, SPINE
+## MSK RADIOLOGY
+## THORACIC RADIOLOGY
+## BREAST RADIOLOGY
+## ABDOMINAL RADIOLOGY
+## PEDIATRIC RADIOLOGY
+## INTERVENTIONAL RADIOLOGY
+`},
+{id:"ai-in-radiology",name:"AI IN RADIOLOGY",md:`
+## HELP TO DIAGNOSIS
+[ChatGPT](https://chatgpt.com/) / ANY AI CHATBOT
+For challenging or confusing cases, provide relevant clinical history and clearly describe imaging findings (mention important positive findings & significant negative findings).
+Then ask for:
+Possible differential diagnosis
+Reasoning behind each diagnosis
+## REPORT WRITING
+Structured Report Writing Assistance:
+[ChatGPT:](https://chatgpt.com/)
+Describe the imaging findings with or without probable diagnosis in your own words. Then request a complete radiology X-ray / USG / CT / MRI report structured under the following headings:
+Description
+Impression
+Advice & Suggestion
+Medicolegal Considerations (if relevant)
+[RadRocket AI](https://radrocket.ai/):
+- Structured Reporting Templates - Access high-quality, standardized radiology reporting templates designed to improve accuracy, clarity, and efficiency in daily practice.
+- AI-Powered Report Writing - Generate up to 300 radiology reports per month (free). Save time, maintain consistency, and enhance reporting workflow with intelligent assistance.
+[Quillr AI](https://quillr.ai/):
+## ONGOING RESEARCH
+Artificial intelligence is rapidly evolving, and its full potential is still unfolding. At present, AI assists in analyzing complex imaging findings and supports the creation of structured, high-quality radiology reports.
+However, AI is not infallible. Its outputs must always be cross-checked with sound radiological knowledge and clinical correlation. AI should be used as a supportive tool, not a substitute for professional expertise.
+`},
+];
+
+/* ---------- renderer ---------- */
+const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const inline=s=>esc(s).replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g,(m,t,u)=>`<a href="${u}" target="_blank" rel="noopener">${t}</a>`);
+function toHTML(md){
+  const cards=[];let cur=null,html="",depth=0;
+  const closeLists=()=>{while(depth>0){html+="</li></ul>";depth--}};
+  const flush=()=>{closeLists();if(cur)cards.push({h:cur,body:html});html=""};
+  md.trim().split("\n").forEach(line=>{
+    if(line.startsWith("## ")){flush();cur=line.slice(3);return}
+    if(line.startsWith("### ")){closeLists();html+=`<h3>${inline(line.slice(4))}</h3>`;return}
+    const m=line.match(/^( *)- (.*)$/);
+    if(m){
+      const lvl=m[1].length/2+1;
+      if(lvl>depth){while(depth<lvl){html+="<ul><li>";depth++}}
+      else{while(depth>lvl){html+="</li></ul>";depth--}html+="</li><li>"}
+      html+=inline(m[2]);return;
+    }
+    closeLists();if(line.trim())html+=`<p>${inline(line)}</p>`;
+  });
+  flush();return cards;
+}
+PAGES.forEach(p=>p.cards=toHTML(p.md));
+
+function render(){
+  const id=(location.hash||"#radiology").slice(1);
+  const p=PAGES.find(x=>x.id===id)||PAGES[0];
+  document.querySelectorAll("nav a,.mobile-nav a").forEach(a=>{if(a.dataset.id===p.id)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
+  document.title="Radiology Resourses - "+p.name;
+  const toc=p.cards.length>3?`<div class="toc">${p.cards.map((c,i)=>`<a href="#${p.id}" data-jump="c-${i}">${esc(c.h)}</a>`).join("")}</div>`:"";
+  document.getElementById("view").innerHTML=`<h1>${esc(p.name)}</h1>${toc}`+p.cards.map((c,i)=>`<section class="card" id="c-${i}"><h2>${esc(c.h)}</h2><div class="card-body">${c.body}</div></section>`).join("");
+  applySearch();
+}
+function applySearch(){
+  const q=document.getElementById("q").value.trim().toLowerCase();
+  document.querySelectorAll("#view mark").forEach(m=>m.replaceWith(...m.childNodes));
+  document.querySelectorAll("#view .card").forEach(card=>{
+    if(!q){card.classList.remove("hide");card.querySelectorAll(".hide").forEach(e=>e.classList.remove("hide"));return}
+    const lis=[...card.querySelectorAll("li,p")];
+    let any=card.querySelector("h2").textContent.toLowerCase().includes(q);
+    lis.forEach(li=>{const hit=li.textContent.toLowerCase().includes(q);li.classList.toggle("hide",!hit&&!any&&!li.querySelector("li"));if(hit)any=true});
+    card.classList.toggle("hide",!any);
+  });
+}
+document.getElementById("nav").innerHTML=PAGES.map(p=>`<a href="#${p.id}" data-id="${p.id}">${p.name}</a>`).join("");
+document.getElementById("mnav").innerHTML=PAGES.map(p=>`<a href="#${p.id}" data-id="${p.id}">${p.name}</a>`).join("");
+document.addEventListener("click",e=>{const j=e.target.closest("[data-jump]");if(j){e.preventDefault();document.getElementById(j.dataset.jump).scrollIntoView({behavior:"smooth"})}});
+document.getElementById("q").addEventListener("input",applySearch);
+window.addEventListener("hashchange",()=>{render();window.scrollTo(0,0)});
+render();
+</script>
+</body>
+</html>
